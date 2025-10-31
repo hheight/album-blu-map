@@ -1,0 +1,224 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Map of Kyiv</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity=""
+    />
+    <style>
+      #map {
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+      }
+      .leaflet-tooltip-left {
+        margin-left: -38px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+      const map = L.map("map").setView([50.4501, 30.5234], 14);
+
+      L.tileLayer(
+        "https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=s0tXPHtnEHBWtq8l9KSz",
+        {
+          attribution:
+            '&copy; <a href="https://www.maptiler.com/">MapTiler</a> &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a>',
+          tileSize: 512,
+          zoomOffset: -1,
+        },
+      ).addTo(map);
+
+      const points = {
+        type: "FeatureCollection",
+        features: [
+          {
+            type: "Feature",
+            properties: { title: "Maidan Nezalezhnosti", description: "" },
+            geometry: {
+              type: "Point",
+              coordinates: [30.522019677340268, 50.451261598978284],
+            },
+          },
+          {
+            type: "Feature",
+            properties: { title: "Monastero di san Michele", description: "" },
+            geometry: {
+              type: "Point",
+              coordinates: [30.52353911103743, 50.456009509470796],
+            },
+          },
+          {
+            type: "Feature",
+            properties: {
+              title: "Cattedrale di Santa Sofia",
+              description: "",
+              direction: "left",
+            },
+            geometry: {
+              type: "Point",
+              coordinates: [30.514675566859214, 50.45301830154039],
+            },
+          },
+          {
+            type: "Feature",
+            properties: {
+              title: "Vul Volodymyrska 33, SBU",
+              description: "",
+              direction: "left",
+            },
+            geometry: {
+              type: "Point",
+              coordinates: [30.515813240420005, 50.45086023281811],
+            },
+          },
+          {
+            type: "Feature",
+            properties: { title: "Vul Velyka Vasylkivska", description: "" },
+            geometry: {
+              type: "Point",
+              coordinates: [30.518338533776706, 50.425918108427744],
+            },
+          },
+          {
+            type: "Feature",
+            properties: { title: "Lva Tolstoho", description: "" },
+            geometry: {
+              type: "Point",
+              coordinates: [30.516523087938992, 50.43945516100469],
+            },
+          },
+          {
+            type: "Feature",
+            properties: {
+              title: "Lybidska (monumento ai Cechisti)",
+              description: "",
+            },
+            geometry: {
+              type: "Point",
+              coordinates: [30.525, 50.412222],
+            },
+          },
+          {
+            type: "Feature",
+            properties: { title: "Stadio olimpico", description: "" },
+            geometry: {
+              type: "Point",
+              coordinates: [30.521213876521198, 50.433763224232884],
+            },
+          },
+          {
+            type: "Feature",
+            properties: { title: "Lavra", description: "", direction: "left" },
+            geometry: {
+              type: "Point",
+              coordinates: [30.55794324220331, 50.43510932627694],
+            },
+          },
+          {
+            type: "Feature",
+            properties: { title: "Statua alla madre patria", description: "" },
+            geometry: {
+              type: "Point",
+              coordinates: [30.562108036116733, 50.42663667346538],
+            },
+          },
+          {
+            type: "Feature",
+            properties: { title: "Palazzo Ucraina", description: "" },
+            geometry: {
+              type: "Point",
+              coordinates: [30.521686377954925, 50.422322214603724],
+            },
+          },
+          {
+            type: "Feature",
+            properties: {
+              title: "Università Taras Shevchenko",
+              description: "",
+            },
+            geometry: {
+              type: "Point",
+              coordinates: [30.511129128007802, 50.442181840687326],
+            },
+          },
+          {
+            type: "Feature",
+            properties: {
+              title: "Casa con la colomba sul soffitto (Shchusieva 24)",
+              description: "",
+            },
+            geometry: {
+              type: "Point",
+              coordinates: [30.439795413434787, 50.47501401953949],
+            },
+          },
+          {
+            type: "Feature",
+            properties: {
+              title: "Casa nell’aria (Sechenova 6)",
+              description: "",
+            },
+            geometry: {
+              type: "Point",
+              coordinates: [30.490312503603125, 50.3887848129368],
+            },
+          },
+          {
+            type: "Feature",
+            properties: { title: "Mercato Petrivka", description: "" },
+            geometry: {
+              type: "Point",
+              coordinates: [30.496753656858182, 50.485621601254344],
+            },
+          },
+          {
+            type: "Feature",
+            properties: { title: "Fiume Dnipro", description: "" },
+            geometry: {
+              type: "Point",
+              coordinates: [30.569760524257376, 50.43588764913913],
+            },
+          },
+          {
+            type: "Feature",
+            properties: {
+              title: "Lisova",
+              description: "",
+              direction: "right",
+            },
+            geometry: {
+              type: "Point",
+              coordinates: [30.62843741866106, 50.47254201886047],
+            },
+          },
+        ],
+      };
+
+      L.geoJSON(points, {
+        pointToLayer: function (feature, latlng) {
+          return L.marker(latlng);
+        },
+        onEachFeature: function (feature, layer) {
+          if (feature.properties && feature.properties.title) {
+            layer.bindTooltip(feature.properties.title, {
+              permanent: true,
+              direction: feature.properties.direction || "right",
+            });
+            layer.bindPopup(
+              `<strong>${feature.properties.title}</strong><br>${feature.properties.description || ""}`,
+            );
+          }
+        },
+      }).addTo(map);
+    </script>
+  </body>
+</html>
